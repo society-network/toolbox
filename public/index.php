@@ -6,7 +6,20 @@
  * Time: 1:53 PM
  * To change this template use File | Settings | File Templates.
  */
-echo '<h1>Welcome!</h1>';
-echo '<pre>';
-var_dump($_SERVER);
-echo '</pre>';
+
+$base_dir = DIRECTORY_SEPARATOR . 'xampp' . DIRECTORY_SEPARATOR . 'htdocs' . DIRECTORY_SEPARATOR . 'toolbox';
+$lib_dir = $base_dir . DIRECTORY_SEPARATOR . 'library';
+$pub_dir = $base_dir .DIRECTORY_SEPARATOR . 'public';
+$app_dir = $base_dir .DIRECTORY_SEPARATOR . 'application';
+$data_dir = $base_dir .DIRECTORY_SEPARATOR . 'data';
+define('BASE_DIR', $base_dir);
+define('LIB_DIR', $lib_dir);
+define('PUB_DIR', $pub_dir);
+define('APP_DIR', $pub_dir);
+define('DATA_DIR', $data_dir);
+
+ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . LIB_DIR);
+require_once('Zend' . DIRECTORY_SEPARATOR . 'Loader.php');
+Zend_Loader::registerAutoload();
+
+echo 'ZF version ' . Zend_Version::VERSION . PHP_EOL;
