@@ -1,0 +1,15 @@
+<?php echo $this->docType('XHTML1_STRICT') ?>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <?php //echo $this->headTitle() ?>
+    <?php //echo $this->headScript() ?>
+    <?php //echo $this->headStylesheet() ?>
+</head>
+<body>
+<h1>Using Layout</h1>
+<?php echo $this->partial('header.phtml') ?>
+<?php echo $this->layout()->content ?>
+<?php echo $this->partial('footer.phtml') ?>
+</body>
+</html>

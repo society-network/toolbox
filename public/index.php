@@ -15,11 +15,11 @@ $data_dir = $base_dir .DIRECTORY_SEPARATOR . 'data';
 define('BASE_DIR', $base_dir);
 define('LIB_DIR', $lib_dir);
 define('PUB_DIR', $pub_dir);
-define('APP_DIR', $pub_dir);
+define('APP_DIR', $app_dir);
 define('DATA_DIR', $data_dir);
+define('BASE_URL', '/toolbox');
 
 ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . LIB_DIR);
 require_once('Zend' . DIRECTORY_SEPARATOR . 'Loader.php');
 Zend_Loader::registerAutoload();
-
-echo 'ZF version ' . Zend_Version::VERSION . PHP_EOL;
+require_once(APP_DIR . DIRECTORY_SEPARATOR . 'Bootstrap.php');
