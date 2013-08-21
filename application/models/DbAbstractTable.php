@@ -6,7 +6,7 @@
  * Time: 10:25 PM
  * To change this template use File | Settings | File Templates.
  */
-abstract class DbAbstractTable extends Zend_Db_Table_Abstract
+abstract class Models_DbAbstractTable extends Zend_Db_Table_Abstract
 {
     /**
      * @param array $data
@@ -14,7 +14,7 @@ abstract class DbAbstractTable extends Zend_Db_Table_Abstract
      */
     public function insert(array $data) {
         if (empty($data['created'])) {
-            $data['created'] = new Datetime('now');
+            $data['created'] = date_create('now')->format(DateTime::ISO8601);
         }
         return parent::insert($data);
     }
@@ -26,7 +26,7 @@ abstract class DbAbstractTable extends Zend_Db_Table_Abstract
      */
     public function update(array $data, $where) {
         if (empty($data['modified'])) {
-            $data['modified'] = new DateTime('now');
+            $data['modified'] = date_create('now')->format(DateTime::ISO8601);
             return parent::update($data, $where);
         }
     }
@@ -36,7 +36,7 @@ abstract class DbAbstractTable extends Zend_Db_Table_Abstract
      * @return int
      */
     public function soft_delete($where) {
-        $data['deleted'] = new DateTime('now');
+        $data['deleted'] = date_create('now')->format(DateTime::ISO8601);
         return $this->update($data, $where);
     }
 }

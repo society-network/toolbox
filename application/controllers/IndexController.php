@@ -10,6 +10,10 @@ class IndexController extends Zend_Controller_Action
 {
     public function indexAction()
     {
-
+        $user = new Models_User();
+        $user->insert(array(
+            'username' => 'test',
+            'password' => 'pass',
+        ));
     }
 }

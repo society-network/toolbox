@@ -6,7 +6,7 @@
  * Time: 7:09 PM
  * To change this template use File | Settings | File Templates.
  */
-class Users extends DbAbstractTable
+class Models_User extends Models_DbAbstractTable
 {
     protected $_name = 'users';
 }
