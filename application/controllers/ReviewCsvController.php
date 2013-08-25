@@ -25,6 +25,7 @@ class ReviewCsvController extends Zend_Controller_Action
 
     public function openAction() {
         $id = $this->_request->getParam('id');
+
         if ($id) {
             $srcfile = $this->models_srcfile->find($id);
             $this->view->srcfile = $srcfile;
@@ -33,11 +34,43 @@ class ReviewCsvController extends Zend_Controller_Action
             $srcdata = $this->models_srcdata->fetchAll($srcdata_where);
             $this->view->srcdata = $srcdata;
             //Zend_Debug::dump($srcdata);
+
+            $form_exportcsv = new Forms_Exportcsv();
+            $form_exportcsv->getElement('src_file_id')->setValue($id);
+            $url = $this->view->url(array(
+                'controller'=>'review-csv',
+                'action'=>'export-csv'
+            ), null, true);
+            $form_exportcsv->setAction($url);
+            $this->view->form_exportcsv = $form_exportcsv;
         }
     }
 
-    private function checkSrcData($srcdata) {
+    public function exportCsvAction() {
+        $src_file_id = $this->_request->getParam('src_file_id');
+        $csv_type = $this->_request->getParam('csv_type');
 
+        if ($this->_request->isPost() && $src_file_id && $csv_type) {
+            $this->_helper->layout->disableLayout();
+            $this->_helper->viewRenderer->setNoRender(true);
+
+            $srcdata_where = $this->models_srcdata->select()->where('src_file_id = ?', $src_file_id);
+            $srcdata = $this->models_srcdata->fetchAll($srcdata_where);
+            switch ($csv_type) {
+                case 'export-csv-custom-upload':
+                    $shipping_date = $this->_request->getParam('shipping_date');
+                    $this->generateCustomUploadCsv($srcdata, $shipping_date);
+                    break;
+                case 'export-csv-supply-master':
+                    $airway_bill = $this->_request->getParam('airway_bill');
+                    $this->generateSupplyMasterCsv($srcdata, $airway_bill);
+                    break;
+                default:
+                    $this->_helper->redirector('open', 'review-csv', null, array('id' => $src_file_id));
+            }
+        } else {
+            $this->_helper->redirector('open', 'review-csv', null, array('id' => $src_file_id));
+        }
     }
 
     private function findShipperByName($name) {
@@ -55,7 +88,7 @@ class ReviewCsvController extends Zend_Controller_Action
         return null;
     }
 
-    private function generateCustomUploadCsv($srcdata) {
+    private function generateCustomUploadCsv($srcdata, $shipped_date = '') {
         $csv_headers = array(
             'invoice_number',
             'flight_id',
@@ -101,7 +134,7 @@ class ReviewCsvController extends Zend_Controller_Action
                 //'shipped_quantity',
                 $line_data[4] = $row->quantity;
                 //'/shipped_date',
-                $line_data[5] = '';
+                $line_data[5] = $shipped_date ? $shipped_date : '';
                 //'delname',
                 $line_data[6] = $row->receiver_name;
                 //'deladdr1',
@@ -158,18 +191,6 @@ class ReviewCsvController extends Zend_Controller_Action
         fclose($out);
     }
 
-    public function exportCsvCustomUploadAction() {
-        $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
-
-        $id = $this->_request->getParam('id');
-        if ($id) {
-            $srcdata_where = $this->models_srcdata->select()->where('src_file_id = ?', $id);
-            $srcdata = $this->models_srcdata->fetchAll($srcdata_where);
-            $this->generateCustomUploadCsv($srcdata);
-        }
-    }
-
     private function findCarrierCodeByDepotCode($depot_code) {
         if ($depot_code) {
             $find = $this->models_depotcarriercode->select()->where('depot_code = ?', $depot_code)->limit(1);
@@ -181,7 +202,7 @@ class ReviewCsvController extends Zend_Controller_Action
         return null;
     }
 
-    private function generateSupplyMasterCsv($srcdata) {
+    private function generateSupplyMasterCsv($srcdata, $airway_bill = '') {
         $csv_headers = array(
             'Sender',
             'Group',
@@ -254,7 +275,7 @@ class ReviewCsvController extends Zend_Controller_Action
                 //'Total Items',
                 $line_data[14] = $row->quantity;
                 //'Airway',
-                $line_data[15] = '';
+                $line_data[15] = $airway_bill ? $airway_bill : '';
                 //'Description',
                 $line_data[16] = 'CARTON';
                 //'Dimensions (Length)',
@@ -285,18 +306,6 @@ class ReviewCsvController extends Zend_Controller_Action
             ->setHeader('Content-Disposition', 'inline; filename=supply_master.csv')
             ->setHeader('Content-type', 'text/csv');
         fclose($out);
-    }
-
-    public function exportCsvSupplyMasterAction() {
-        $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
-
-        $id = $this->_request->getParam('id');
-        if ($id) {
-            $srcdata_where = $this->models_srcdata->select()->where('src_file_id = ?', $id);
-            $srcdata = $this->models_srcdata->fetchAll($srcdata_where);
-            $this->generateSupplyMasterCsv($srcdata);
-        }
     }
 
     public function deleteCsvAction()

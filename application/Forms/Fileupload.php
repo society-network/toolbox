@@ -21,14 +21,6 @@ class Forms_Fileupload extends Zend_Form
         $file->addValidator('Extension', false, 'csv,txt');
         $this->addElement($file);
 
-        // Add the comment element
-//        $this->addElement('textarea', 'comment', array(
-//            'label'         => 'Comment:',
-//            'required'      => false,
-//            'cols'          => 40,
-//            'rows'          => 4,
-//        ));
-
         // Add the submit button
         $this->addElement('submit', 'submit', array(
             'ignore'   => true,
