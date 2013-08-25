@@ -6,8 +6,8 @@
  * Time: 7:09 PM
  * To change this template use File | Settings | File Templates.
  */
-class Models_User extends Models_DbAbstractTable
+class Models_ShipperAlias extends Models_DbAbstractTable
 {
-    protected $_name = 'users';
-    protected $_primary = 'user_id';
+    protected $_name = 'shipper_aliases';
+    protected $_primary = 'shipper_alias_id';
 }

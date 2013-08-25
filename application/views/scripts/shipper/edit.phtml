@@ -1,0 +1,9 @@
+<h2>shipper alias</h2>
+<p><a href="<?php echo BASE_URL?>/shipper/edit-alias/shipper_id/<?php echo $this->shipper_id ?>">create new alias</a></p>
+<?php if ($this->aliases): ?>
+    <ul>
+        <?php foreach ($this->aliases as $alias): ?>
+            <li><?php echo $alias->name?></li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>

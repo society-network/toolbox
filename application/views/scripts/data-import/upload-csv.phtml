@@ -1,0 +1,17 @@
+<?php echo $this->fileupload_form?>
+<hr/>
+<?php if ($this->all_srcfile): ?>
+    <ul>
+    <?php foreach ($this->all_srcfile as $row): ?>
+        <li>
+            <div>
+                <span><?php echo $row->created ?></span> -
+                <a href="<?php echo BASE_URL?>/review-csv/open/id/<?php echo $row->src_file_id ?>">
+                    <?php echo $row->name ?>
+                </a>
+                [<a href="<?php echo BASE_URL?>/review-csv/delete-csv/id/<?php echo $row->src_file_id ?>" onclick="return confirm('Are you really want to delete?')">x</a>]
+            </div>
+        </li>
+    <?php endforeach; ?>
+    </ul>
+<?php endif; ?>

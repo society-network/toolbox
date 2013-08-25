@@ -24,4 +24,5 @@ $front->setControllerDirectory(APP_DIR . DS .'Controllers')
     ->setRouter($router)
     ->setBaseUrl(BASE_URL)
     ->setParam('useDefaultControllerAlways', false);
+$front->throwExceptions(true);
 $front->dispatch();

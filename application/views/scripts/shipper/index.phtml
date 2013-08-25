@@ -1,0 +1,8 @@
+<p><a href="<?php echo BASE_URL?>/shipper/edit">create new shipper</a></p>
+<?php if ($this->shippers): ?>
+    <ul>
+    <?php foreach ($this->shippers as $shipper): ?>
+        <li><a href="<?php echo BASE_URL?>/shipper/edit/id/<?php echo $shipper->shipper_id ?>"><?php echo $shipper->shipper_name1?></a></li>
+    <?php endforeach; ?>
+    </ul>
+<?php endif; ?>

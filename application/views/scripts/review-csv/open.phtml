@@ -1,0 +1,11 @@
+<?php if ($this->srcfile): ?>
+    <h2><?php echo $this->srcfile[0]->name ?></h2>
+    <div>
+        <a href="<?php echo BASE_URL?>/review-csv/export-csv-custom-upload/id/<?php echo $this->srcfile[0]->src_file_id ?>">Save as custom upload CSV</a> |
+        <a href="<?php echo BASE_URL?>/review-csv/export-csv-supply-master/id/<?php echo $this->srcfile[0]->src_file_id ?>">Save as supply master CSV</a>
+    </div>
+<?php endif; ?>
+<hr/>
+<?php if ($this->srcdata): ?>
+
+<?php endif; ?>

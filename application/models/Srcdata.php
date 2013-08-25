@@ -6,8 +6,8 @@
  * Time: 7:09 PM
  * To change this template use File | Settings | File Templates.
  */
-class Models_User extends Models_DbAbstractTable
+class Models_Srcdata extends Models_DbAbstractTable
 {
-    protected $_name = 'users';
-    protected $_primary = 'user_id';
+    protected $_name = 'src_data';
+    protected $_primary = 'src_data_id';
 }
