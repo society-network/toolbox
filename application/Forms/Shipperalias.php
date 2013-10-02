@@ -16,6 +16,7 @@ class Forms_ShipperAlias extends Zend_Form
         $this->addElement('text', 'name', array(
             'label'         => 'Alias name:',
             'required'      => true,
+            'filters'       => array('StringToUpper'),
         ));
 
         // Add the submit button

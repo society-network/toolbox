@@ -74,18 +74,7 @@ class ReviewCsvController extends Zend_Controller_Action
     }
 
     private function findShipperByName($name) {
-        if ($name) {
-            $find_name = $this->models_shipperalias->select()->where('name = ?', strtoupper($name))->limit(1);
-            $shipper_aliases = $this->models_shipperalias->fetchAll($find_name);
-            if (count($shipper_aliases)) {
-                $shipper_id = $shipper_aliases[0]->shipper_id;
-                $shippers = $this->models_shipper->find($shipper_id);
-                if (count($shippers)) {
-                    return $shippers[0];
-                }
-            }
-        }
-        return null;
+        return $this->models_shipper->findShipperByName($name);
     }
 
     private function generateCustomUploadCsv($srcdata, $shipped_date = '') {

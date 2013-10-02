@@ -1,9 +1,31 @@
-<h2>shipper alias</h2>
+<h2>Shipper</h2>
+<?php if ($this->successes): ?>
+    <div class="success">
+        <?php
+        foreach ($this->successes as $success) {
+            echo $success;
+        }
+        ?>
+    </div>
+<?php endif; ?>
+<?php if ($this->errors): ?>
+    <div class="error">
+        <?php
+        foreach ($this->errors as $error) {
+            echo $error;
+        }
+        ?>
+    </div>
+<?php endif; ?>
+<?php echo $this->form_shipper ?>
 <p><a href="<?php echo BASE_URL?>/shipper/edit-alias/shipper_id/<?php echo $this->shipper_id ?>">create new alias</a></p>
 <?php if ($this->aliases): ?>
     <ul>
         <?php foreach ($this->aliases as $alias): ?>
-            <li><?php echo $alias->name?></li>
+            <li>
+                <a href="<?php echo BASE_URL?>/shipper/edit-alias/shipper_alias_id/<?php echo $alias->shipper_alias_id ?>"><?php echo $alias->name ?></a>
+                [<a href="<?php echo BASE_URL?>/shipper/delete-alias/id/<?php echo $alias->shipper_alias_id ?>" onclick="return confirm('Are you really want to delete?')">x</a>]
+            </li>
         <?php endforeach; ?>
-    </ul>
+    </ul><br/>
 <?php endif; ?>

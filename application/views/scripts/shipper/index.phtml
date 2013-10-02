@@ -2,7 +2,10 @@
 <?php if ($this->shippers): ?>
     <ul>
     <?php foreach ($this->shippers as $shipper): ?>
-        <li><a href="<?php echo BASE_URL?>/shipper/edit/id/<?php echo $shipper->shipper_id ?>"><?php echo $shipper->shipper_name1?></a></li>
+        <li>
+            <a href="<?php echo BASE_URL?>/shipper/edit/id/<?php echo $shipper->shipper_id ?>"><?php echo $shipper->shipper_name1?></a>
+            [<a href="<?php echo BASE_URL?>/shipper/delete/id/<?php echo $shipper->shipper_id ?>" onclick="return confirm('Are you really want to delete?')">x</a>]
+        </li>
     <?php endforeach; ?>
     </ul>
 <?php endif; ?>

@@ -1,1 +1,11 @@
+<h2>Shipper Alias</h2>
+<?php if ($this->errors): ?>
+    <div class="error">
+        <?php
+        foreach ($this->errors as $error) {
+            echo $error;
+        }
+        ?>
+    </div>
+<?php endif; ?>
 <?php echo $this->form_shipperalias ?>

@@ -76,6 +76,7 @@ class DataImportController extends Zend_Controller_Action
 
                     }
                     fclose($handle);
+                    unlink($full_path);
                 }
             }
             //Zend_Debug::dump($adapter->getFileInfo());
